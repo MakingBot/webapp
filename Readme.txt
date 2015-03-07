@@ -28,7 +28,7 @@ Packages
 
 Sudo configuration
 
-            # Add the following line in /etc/hosts
+            # Add the following line in /etc/sudoers
             www-data ALL=(ALL) NOPASSWD: /usr/local/proteo/websudoer/websudoer.sh            
         
 

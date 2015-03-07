@@ -4,7 +4,6 @@ include_once ResolveUrl('/tool/UrlBuilder.class');
 include_once ResolveUrl('/tool/Constants.class');
 include_once ResolveUrl('/mvc/controller/WirelessController.class');
 include_once ResolveUrl('/mvc/controller/IndexController.class');
-include_once ResolveUrl('/mvc/controller/InstallController.class');
 include_once ResolveUrl('/mvc/controller/NotFoundController.class');
 include_once ResolveUrl('/mvc/controller/TestController.class');
 
@@ -148,7 +147,6 @@ function loadController()
     $controllerDic[WirelessController::getPage()] = 'WirelessController';
     $controllerDic[IndexController::getPage()] = 'IndexController';
     $controllerDic[NotFoundController::getPage()] = 'NotFoundController';
-    $controllerDic[InstallController::getPage()] = 'InstallController';
     //$controllerDic[TestController::getPage()] = 'TestController';
 
     $page = getHttp(Constants::$PAGE_HTTP_KEY);
