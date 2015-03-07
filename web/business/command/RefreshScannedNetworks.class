@@ -1,0 +1,34 @@
+<?php
+
+include_once ResolveUrl('/business/command/AbstractCommand.class');
+include_once ResolveUrl('/dal/handler/WlanInterfaceHandler.class');
+
+class RefreshScannedNetworks extends AbstractCommand
+{    
+    public $wlanName;
+    private $wlanInterface;
+    
+    public function getWlanInterface()
+    {
+        return $this->wlanInterface;
+    }
+
+    protected function canExecute()
+    {
+        if (!empty($this->wlanName))
+        {
+            return TRUE;
+        }
+        else
+        {
+            return FALSE;
+        }
+    }
+
+    protected function doIt()
+    {        
+        $this->wlanInterface = getSingle(WlanInterfaceLoader::Instance()->getAll(), 'name', $this->wlanName);
+    }
+}
+
+?>

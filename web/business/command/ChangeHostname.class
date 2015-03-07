@@ -1,0 +1,29 @@
+<?php
+
+include_once ResolveUrl('/business/command/AbstractCommand.class');
+include_once ResolveUrl('/dal/handler/LocalDnsHandler.class');
+
+class ChangeHostname extends AbstractCommand
+{
+    public $newHostname;
+
+    protected function canExecute()
+    {
+        if ($this->newHostname != null)
+        {
+            return TRUE;
+        }
+        else
+        {
+            return FALSE;
+        }
+    }
+
+    protected function doIt()
+    {
+        $handler = LocalDnsHandler::Instance();
+        $this->resultState = $handler->changeHostname($this);
+    }
+}
+
+?>

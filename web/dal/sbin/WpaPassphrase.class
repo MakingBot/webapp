@@ -1,0 +1,54 @@
+<?php
+
+include_once ResolveUrl('/dal/sbin/AbstractSbin.class');
+
+class WpaPassphrase extends AbstractSbin
+{
+
+    private $essid;
+    private $psk;
+
+    public static function _new()
+    {
+        return new WpaPassphrase();
+    }
+
+    public function setEssid($essid)
+    {
+        $this->essid = $essid;
+        return $this;
+    }
+
+    public function setPsk($psk)
+    {
+        $this->psk = $psk;
+        return $this;
+    }
+
+    public function exec()
+    {
+        $arr = preg_split("'[\n\r]'", $this->doIt());
+
+        foreach ($arr as $str)
+        {
+            if (preg_match("'psk=[a-zA-Z0-9]+'", $str))
+            {
+                return preg_replace("'^.*psk=([a-zA-Z0-9]+).*$'", '$1', $str);
+            }
+        }
+
+        return '';
+    }
+
+    protected function getCmd()
+    {
+        return 'wpa_passphrase';
+    }
+
+    protected function getParam()
+    {
+        return '"'.$this->essid.'" "'.$this->psk.'"';
+    }
+}
+
+?>

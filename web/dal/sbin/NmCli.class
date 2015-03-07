@@ -1,0 +1,159 @@
+<?php
+
+include_once ResolveUrl('/dal/sbin/AbstractSbin.class');
+include_once ResolveUrl('/business/object/NetworkConfig.class');
+include_once ResolveUrl('/tool/Constants.class');
+
+class NmCli extends AbstractSbin
+{
+    public static $CMD_CONNECT_NETWORK = 'CMD_CONNECT_NETWORK';
+    public static $CMD_DIRECT_CONNECT_NETWORK = 'CMD_DIRECT_CONNECT_NETWORK';
+    public static $CMD_DISCONNECT_NETWORK = 'CMD_DISCONNECT_NETWORK';
+    public static $CMD_REMOVE_NETWORK = 'CMD_REMOVE_NETWORK';
+    public static $CMD_REGISTRED_NETWORK = 'CMD_REGISTRED_NETWORK';
+    public static $CMD_REGISTRED_NETWORK_GET_BSSID = 'CMD_REGISTRED_NETWORK_GET_BSSID';
+    public static $CMD_GET_ALL_INTERFACES = 'CMD_GET_ALL_INTERFACES';
+    public static $CMD_GET_SCAN_RESULT = 'CMD_GET_SCAN_RESULT';
+    private $wlanName;
+    private $networkId;
+    private $cmd;
+    private $ssid;
+    private $bssid;
+    private $password;
+
+    public static function _new()
+    {
+        return new NmCli();
+    }
+
+    public function setWlanName($wlanName)
+    {
+        $this->wlanName = $wlanName;
+        return $this;
+    }
+
+    public function setSsid($ssid)
+    {
+        $this->ssid = $ssid;
+        return $this;
+    }
+
+    public function setBssid($bssid)
+    {
+        $this->bssid = $bssid;
+        return $this;
+    }
+
+    public function setNetworkId($networkId)
+    {
+        $this->networkId = $networkId;
+        return $this;
+    }
+
+    public function setPassword($password)
+    {
+        $this->password = $password;
+        return $this;
+    }
+
+    public function setCommand($cmd)
+    {
+        $this->cmd = $cmd;
+        return $this;
+    }
+
+    public function exec()
+    {
+        $arr = $this->removeEmptyLine(preg_split("'[\n\r]'", $this->doIt()));
+
+        if ($this->cmd ===NmCli::$CMD_REGISTRED_NETWORK_GET_BSSID)
+        {
+            return $this->getFuckingBssid($arr);
+        }
+
+        return $this->getTable($arr);
+    }
+
+    protected function getCmd()
+    {
+        return Constants::$SUDOER_SCRIPT.' nmcli';
+    }
+
+    private function getTable($arr)
+    {
+        $table = array();
+
+        foreach ($arr as $str)
+        {
+            $lineArray = array();
+            $lineData = preg_escaped_split(":", $str);
+
+            foreach ($lineData as $data)
+            {
+                $lineArray[] = $data;
+            }
+
+            $table[] = $lineArray;
+        }
+
+        return $table;
+    }
+
+    private function getFuckingBssid($arr)
+    {
+        //sur cette commande, le bssid n'est pas "escaped" ...
+        $table = array();
+
+        foreach ($arr as $str)
+        {
+            $lineArray = array();
+            $lineData = explode(":", $str, 2);
+
+            foreach ($lineData as $data)
+            {
+                $lineArray[] = $data;
+            }
+
+            $table[] = $lineArray;
+        }
+
+        return $table;
+    }
+
+    protected function getParam()
+    {
+        switch ($this->cmd)
+        {
+            case NmCli::$CMD_CONNECT_NETWORK:
+                $params = 'device wifi connect "'.$this->ssid.'" bssid '.$this->bssid.' iface '.$this->wlanName.' password "'.$this->password.'" --timeout 30';
+                break;
+            case NmCli::$CMD_DIRECT_CONNECT_NETWORK:
+                 $params = 'connection up uuid "'.$this->networkId.'" --timeout 30';
+                break;
+            case NmCli::$CMD_DISCONNECT_NETWORK:
+                 $params = 'connection down uuid "'.$this->networkId.'"';
+                break;
+            case NmCli::$CMD_REMOVE_NETWORK:
+                $params = 'connection delete uuid "'.$this->networkId.'"';
+                break;
+            case NmCli::$CMD_REGISTRED_NETWORK:
+                $params = '-t -f name,uuid,type connection';
+                break;
+            case NmCli::$CMD_REGISTRED_NETWORK_GET_BSSID:
+                $params = '-t -f 802-11-wireless connection list uuid '.$this->networkId;
+                break;
+            case NmCli::$CMD_GET_ALL_INTERFACES:
+                $params = '-t -f device,type device';
+                break;
+            case NmCli::$CMD_GET_SCAN_RESULT:
+                $params = '-t -f ssid,bssid,mode,freq,rate,signal,security,wpa-flags,rsn-flags,active device wifi list iface '.$this->wlanName;
+                break;
+            default :
+                break;
+        }
+
+        return $params;
+    }
+}
+
+?>

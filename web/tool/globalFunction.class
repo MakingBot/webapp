@@ -1,0 +1,217 @@
+<?php
+
+include_once ResolveUrl('/tool/UrlBuilder.class');
+include_once ResolveUrl('/tool/Constants.class');
+include_once ResolveUrl('/mvc/controller/WirelessController.class');
+include_once ResolveUrl('/mvc/controller/IndexController.class');
+include_once ResolveUrl('/mvc/controller/InstallController.class');
+include_once ResolveUrl('/mvc/controller/NotFoundController.class');
+include_once ResolveUrl('/mvc/controller/TestController.class');
+
+function ResolveUrl($str)
+{
+    return $_SERVER['DOCUMENT_ROOT'].$str;
+}
+
+function getSingle($array, $key, $value)
+{
+    $isFunc = preg_match("'\w+\(\)'", $key);
+
+    if ($isFunc)
+    {
+        $key = substr($key, 0, -2);
+    }
+
+    foreach ($array as $obj)
+    {
+        if ($isFunc && $obj->$key() === $value
+                || !$isFunc && $obj->$key === $value)
+        {
+            return $obj;
+        }
+    }
+
+    return null;
+}
+
+function getWhere($array, $key, $value)
+{
+    $isFunc = preg_match("'\w+\(\)'", $key);
+
+    if ($isFunc)
+    {
+        $key = substr($key, 0, -2);
+    }
+
+    $where = array();
+
+    foreach ($array as $obj)
+    {
+        if ($isFunc && $obj->$key() === $value
+                || !$isFunc && $obj->$key === $value)
+        {
+            $where[] = $obj;
+        }
+    }
+
+    return $where;
+}
+
+function getHttp($key)
+{
+    if (!isset($_GET[$key]))
+    {
+        return '';
+    }
+
+    if (empty($_GET[$key]))
+    {
+        return '';
+    }
+
+    return htmlspecialchars($_GET[$key]);
+}
+
+function getCastedJsonData($to_class)
+{
+    return cast(getJsonData(), $to_class);
+}
+
+function getJsonData()
+{
+    if (!isset($_GET[Constants::$JSON_HTTP_KEY]))
+    {
+        return null;
+    }
+
+    if (empty($_GET[Constants::$JSON_HTTP_KEY]))
+    {
+        return null;
+    }
+
+    return json_decode($_GET[Constants::$JSON_HTTP_KEY]);
+}
+
+function sendResonseAsJson()
+{
+    if (!isset($_GET[Constants::$JSON_RESPONSE_HTTP_KEY]))
+    {
+        return false;
+    }
+
+    if ($_GET[Constants::$JSON_RESPONSE_HTTP_KEY] != 1)
+    {
+        return false;
+    }
+    
+    return true;
+}
+
+function cast($obj, $to_class)
+{
+    if (class_exists($to_class))
+    {
+        $obj_in = serialize($obj);
+        $obj_out = 'O:'.strlen($to_class).':"'.$to_class.'":'.substr($obj_in, $obj_in[2] + 7);
+        
+        return unserialize($obj_out);
+    }
+    else
+    {
+        return false;
+    }
+}
+
+function getIfNotNull($obj, $property)
+{
+    $isFunc = preg_match("'\w+\(\)'", $property);
+
+    if ($obj != null)
+    {
+        if ($isFunc)
+        {
+            $property = substr($property, 0, -2);
+            return $obj->$property();
+        }
+        else
+        {
+            return $obj->$property;
+        }
+    }
+
+    return;
+}
+
+function loadController()
+{
+    $controllerDic = array();
+    $controllerDic[WirelessController::getPage()] = 'WirelessController';
+    $controllerDic[IndexController::getPage()] = 'IndexController';
+    $controllerDic[NotFoundController::getPage()] = 'NotFoundController';
+    $controllerDic[InstallController::getPage()] = 'InstallController';
+    //$controllerDic[TestController::getPage()] = 'TestController';
+
+    $page = getHttp(Constants::$PAGE_HTTP_KEY);
+
+    if (empty($page))
+    {
+        $controller = new $controllerDic[IndexController::getPage()];
+    }
+    elseif (isset($controllerDic[$page]))
+    {
+        $controller = new $controllerDic[$page];
+    }
+    else
+    {
+        $controller = new $controllerDic[NotFoundController::getPage()];
+    }
+
+    $controller->load();
+}
+
+function orderByDesc($array, $key)
+{
+    $isFunc = preg_match("'\w+\(\)'", $key);
+
+    if ($isFunc)
+    {
+        $key = substr($key, 0, -2);
+    }
+
+    $sortedArray = array();
+
+    foreach ($array as $obj)
+    {
+        if ($isFunc)
+        {
+            $index = $obj->$key();
+        }
+        else
+        {
+            $index = $obj->$key;
+        }
+
+        $sortedArray[$index][] = $obj;
+    }
+
+    krsort($sortedArray);
+
+    $sorted = array();
+
+    foreach ($sortedArray as $subArray)
+    {
+        foreach ($subArray as $obj)
+        {
+            $sorted[] = $obj;
+        }
+    }
+
+    return $sorted;
+}
+
+function preg_escaped_split($delim, $str)
+{
+    return preg_split('~(?<!\\\)' . preg_quote($delim, '~') . '~', $str);
+}
+
+?>

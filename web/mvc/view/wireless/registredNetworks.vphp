@@ -1,0 +1,53 @@
+<?php
+if ($currentModel->wlanInterface == null)
+{
+    return;
+}
+?>
+
+<div class="registredNetworks">
+    <h3>Registred networks :</h3>
+    <?php
+    if (sizeof($currentModel->wlanInterface->registredNetworks()) === 0)
+    {
+        echo 'No network are registered';
+    }
+    else
+    {
+        $networks = $currentModel->wlanInterface->registredNetworks();
+
+        echo '<ul id="registredNetworksList" class="sortableList">';
+
+        foreach ($networks as $network)
+        {
+            echo '<li id="remove-network-'.$network->getNetworkId().'">';
+            echo $network->config->ssid;
+            echo '<span class="toolTipFrom imgBlock info" toolTipTo="info"></span>';
+            echo '<span class="toolTipFrom actionButton imgBlock delete" toolTipTo="remove" onclick="javascript:removeNetwork(\'' . $network->getNetworkId() . '\')" ></span>';
+            echo '</li>';
+        }
+
+        echo '</ul>';
+        echo '<button id="saveOrderButton" onclick="javascript:saveOrder();" style="display: none;" >Save order</button>';
+    }
+    ?>
+</div>
+
+<div class="toolTipBlock">
+    <div id="remove">Remove</div>
+    <div id="info">info</div>
+</div>
+<div id="removeDiv">    
+</div>
+<div id="updateOrderDiv">    
+</div>
+<script type="text/javascript">    
+    function removeNetwork(networkId)
+    {
+        var data = new Object();
+        data.<?php echo Constants::$WLAN_HTTP_KEY ?> = '<?php echo htmlspecialchars($currentModel->wlanInterface->name) ?>';
+        data.networkId = networkId;
+        
+        sendRequest('wireless', 'remove-network-'+networkId, 'action=removeNetwork', data, reloadPage);
+    }
+</script>

@@ -1,0 +1,22 @@
+<?php
+
+include_once ResolveUrl('/business/object/Network.class');
+
+class WlanInterface
+{
+    public $name;
+    public $networks = array();
+    public $currentNetwork;
+
+    public function avaibleNetworks()
+    {
+        return getWhere($this->networks, 'isAvaible()', TRUE);
+    }
+
+    public function registredNetworks()
+    {
+        return getWhere($this->networks, 'isRegistred()', TRUE);
+    }
+}
+
+?>

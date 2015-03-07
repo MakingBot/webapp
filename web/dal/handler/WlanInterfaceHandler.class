@@ -1,0 +1,104 @@
+<?php
+
+include_once ResolveUrl('/dal/handler/AbstractHandler.class');
+include_once ResolveUrl('/dal/sbin/WpaPassphrase.class');
+
+class WlanInterfaceHandler extends AbstractHandler
+{
+
+    private static $instance = null;
+
+    public static function Instance()
+    {
+        if (is_null(self::$instance))
+        {
+            self::$instance = new WlanInterfaceHandler();
+        }
+        return self::$instance;
+    }
+
+    private function __construct()
+    {
+        
+    }
+
+    public function connectToNetwork(ConnectToNetwork $cmd)
+    {
+        NmCli::_new()
+                ->setWlanName($cmd->wlanInterface->name)
+                ->setCommand(NmCli::$CMD_CONNECT_NETWORK)
+                ->setSsid($cmd->network->getSsid())
+                ->setBssid($cmd->network->getBssid())
+                ->setPassword($cmd->password)
+                ->exec();
+
+
+        return $this->checkNetwork($cmd);
+    }
+
+    public function directConnectToNetwork(DirectConnectToNetwork $cmd)
+    {
+        NmCli::_new()
+                ->setWlanName($cmd->wlanInterface->name)
+                ->setCommand(NmCli::$CMD_DIRECT_CONNECT_NETWORK)
+                ->setNetworkId($cmd->network->getNetworkId())
+                ->exec();
+    }
+
+    public function disconnectNetwork(DisconnectNetwork $cmd)
+    {
+        NmCli::_new()
+                ->setWlanName($cmd->wlanInterface->name)
+                ->setCommand(NmCli::$CMD_DISCONNECT_NETWORK)
+                ->setNetworkId($cmd->network->getNetworkId())
+                ->exec();
+    }
+
+    private function getHexaPsk($ESSID, $psk)
+    {
+        return WpaPassphrase::_new()
+                        ->setEssid($ESSID)
+                        ->setPsk($psk)
+                        ->exec();
+    }
+
+    private function checkNetwork(ConnectToNetwork $cmd)
+    {
+        //reload interface
+        $wlan = getSingle(WlanInterfaceLoader::Instance()->getAll(), 'name', $cmd->wlanInterface->name);
+
+        if (GetIfNotNull($wlan->currentNetwork, 'getBssid()') == $cmd->network->getBssid())
+        {
+            return CommandState::$SUCCESS;
+        }
+        else
+        {
+            $networkToDelete = getSingle($wlan->networks, 'getBssid()', $cmd->network->getBssid());
+
+            NmCli::_new()
+                    ->setNetworkId($networkToDelete->getNetworkId())
+                    ->setCommand(NmCli::$CMD_REMOVE_NETWORK)
+                    ->exec();
+
+            return CommandState::$ERROR;
+        }
+    }
+
+    public function removeNetwork(RemoveNetwork $cmd)
+    {
+        NmCli::_new()
+                ->setNetworkId($cmd->getNetwork()->getNetworkId())
+                ->setCommand(NmCli::$CMD_REMOVE_NETWORK)
+                ->exec();
+    }
+
+    public function refreshScannedNetwork(RefreshScannedNetworks $cmd)
+    {
+        WpaCli::_new()
+                ->setWlanName($cmd->getWlanInterface()->name)
+                ->setCommand(WpaCli::$CMD_SCAN)
+                ->exec();
+    }
+}
+
+?>

@@ -1,0 +1,188 @@
+<?php
+
+include_once ResolveUrl('/mvc/controller/AbstractController.class');
+include_once ResolveUrl('/dal/loader/WlanInterfaceLoader.class');
+include_once ResolveUrl('/dal/loader/DnsLoader.class');
+include_once ResolveUrl('/mvc/model/wireless/WirelessModel.class');
+include_once ResolveUrl('/mvc/model/wireless/WirelessFormModel.class');
+include_once ResolveUrl('/mvc/model/wireless/WirelessConnectModel.class');
+include_once ResolveUrl('/mvc/model/wireless/LocalDnsModel.class');
+include_once ResolveUrl('/business/command/RemoveNetwork.class');
+include_once ResolveUrl('/business/command/ConnectToNetwork.class');
+include_once ResolveUrl('/business/command/DirectConnectToNetwork.class');
+include_once ResolveUrl('/business/command/DisconnectNetwork.class');
+include_once ResolveUrl('/business/command/RefreshScannedNetworks.class');
+include_once ResolveUrl('/business/command/ChangeHostname.class');
+
+class WirelessController extends AbstractController
+{
+
+    public static function getPage()
+    {
+        return 'wireless';
+    }
+
+    public function index()
+    {
+        $model = $this->getModel();
+        $localModel = $this->getLocalDnsModel();
+
+        $this->sendResponse('wireless/wireless', $model);
+        $this->sendResponse('wireless/scannedNetworks', $model);
+        $this->sendResponse('wireless/registredNetworks', $model);
+        $this->sendResponse('wireless/localDnsName', $localModel);
+    }
+
+    public function refreshScannedNetworksAction()
+    {
+        $cmd = getCastedJsonData('RefreshScannedNetworks');
+        $cmd->Apply();
+
+        $model = new WirelessModel();
+        $model->wlanInterface = $cmd->getWlanInterface();
+
+        $this->sendResponse('wireless/scannedNetworks', $model);
+    }
+
+    public function getConnectFormAction()
+    {
+        $model = $this->getFormModel();
+
+        $this->sendResponse('wireless/wirelessForm', $model);
+    }
+
+    public function removeNetworkAction()
+    {        
+        $cmd = getCastedJsonData('RemoveNetwork');
+        $cmd->Apply();
+    }
+
+    public function connectToNetworkAction()
+    {
+        $model = $this->getConnectModel();
+
+        $cmd = new ConnectToNetwork();
+        $cmd->wlanInterface = $model->wlanInterface;
+        $cmd->network = $model->network;
+        $cmd->password = $model->key;
+        $cmd->Apply();
+    }
+
+    public function directConnectToNetworkAction()
+    {
+        $model = $this->getDirectConnectModel();
+
+        $cmd = new DirectConnectToNetwork();
+        $cmd->wlanInterface = $model->wlanInterface;
+        $cmd->network = $model->network;
+        $cmd->Apply();
+
+        $this->sendResponse('wireless/scannedNetworks', $this->getModel());
+    }
+
+    public function disconnectNetworkAction()
+    {
+        $model = $this->getDisconnectModel();
+
+        $cmd = new DisconnectNetwork();
+        $cmd->wlanInterface = $model->wlanInterface;
+        $cmd->network = $model->network;
+        $cmd->Apply();
+
+        $model = new WirelessModel();
+        $model->wlanInterface = $cmd->getWlanInterface();
+
+        $this->sendResponse('wireless/scannedNetworks', $this->getModel());
+    }
+
+    public function changeHostnameAction()
+    {
+        $cmd = getCastedJsonData('ChangeHostname');        
+        $cmd->Apply();
+
+        $model = $this->getLocalDnsModel();
+        $this->sendResponse('wireless/localDnsName', $model);
+    }
+    
+    private function getModel()
+    {
+        $allWlanInterfaces = WlanInterfaceLoader::Instance()->getAll();
+        $refreshUrl = UrlBuilder::getCurrent();
+        $model = new WirelessModel();
+        $model->url = $refreshUrl;
+
+        if (sizeof($allWlanInterfaces) > 0)
+        {
+            $wlan = getSingle($allWlanInterfaces, 'name', getHttp(Constants::$WLAN_HTTP_KEY));
+
+            $model->wlanInterface = $wlan != null ? $wlan : $allWlanInterfaces[0];
+            $refreshUrl->addParam(Constants::$WLAN_HTTP_KEY, $model->wlanInterface->name);
+        }
+
+        return $model;
+    }
+
+    private function getLocalDnsModel()
+    {
+        $model = new LocalDnsModel();
+        $model->localDnsName = DnsLoader::Instance()->getLocalDnsName();
+        $model->hostname = DnsLoader::Instance()->getHostname();
+        
+        return $model;
+    }
+
+    private function getFormModel()
+    {
+        $allWlanInterfaces = WlanInterfaceLoader::Instance()->getAll();
+        $model = new WirelessFormModel();
+
+        if (sizeof($allWlanInterfaces) > 0)
+        {
+            $wlan = getSingle($allWlanInterfaces, 'name', getHttp(Constants::$WLAN_HTTP_KEY));
+            $model->wlanInterface = $wlan;
+            $model->network = getSingle($wlan->avaibleNetworks(), 'getBssid()', getHttp(Constants::$NETWORK_BSSID_HTTP_KEY));
+        }
+
+        return $model;
+    }
+
+    private function getConnectModel()
+    {
+        $wlan = getHttp(Constants::$WLAN_HTTP_KEY);
+        $networkAddress = getHttp(Constants::$NETWORK_BSSID_HTTP_KEY);
+        $key = getHttp(Constants::$NETWORK_KEY_HTTP_KEY);
+
+        $model = new WirelessConnectModel();
+        $model->wlanInterface = getSingle(WlanInterfaceLoader::Instance()->getAll(), 'name', $wlan);
+        $model->network = getSingle($model->wlanInterface->avaibleNetworks(), 'getBssid()', $networkAddress);
+        $model->key = $key;
+
+        return $model;
+    }
+
+    private function getDirectConnectModel()
+    {
+        $wlan = getHttp(Constants::$WLAN_HTTP_KEY);
+        $networkAddress = getHttp(Constants::$NETWORK_BSSID_HTTP_KEY);
+
+        $model = new WirelessConnectModel();
+        $model->wlanInterface = getSingle(WlanInterfaceLoader::Instance()->getAll(), 'name', $wlan);
+        $model->network = getSingle($model->wlanInterface->avaibleNetworks(), 'getBssid()', $networkAddress);
+
+        return $model;
+    }
+
+    private function getDisconnectModel()
+    {
+        $wlan = getHttp(Constants::$WLAN_HTTP_KEY);
+        $networkAddress = getHttp(Constants::$NETWORK_BSSID_HTTP_KEY);
+
+        $model = new WirelessConnectModel();
+        $model->wlanInterface = getSingle(WlanInterfaceLoader::Instance()->getAll(), 'name', $wlan);
+        $model->network = getSingle($model->wlanInterface->avaibleNetworks(), 'getBssid()', $networkAddress);
+
+        return $model;
+    }
+}
+
+?>

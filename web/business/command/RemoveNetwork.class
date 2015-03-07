@@ -1,0 +1,55 @@
+<?php
+
+include_once ResolveUrl('/business/command/AbstractCommand.class');
+include_once ResolveUrl('/dal/handler/WlanInterfaceHandler.class');
+
+class RemoveNetwork extends AbstractCommand
+{
+
+    public $wlanName;
+    public $networkId;
+    private $wlanInterface;
+    private $network;
+
+    public function getWlanInterface()
+    {
+        if ($this->wlanInterface == null)
+        {
+            $this->wlanInterface = getSingle(WlanInterfaceLoader::Instance()->getAll(), 'name', $this->wlanName);
+        }
+
+        return $this->wlanInterface;
+    }
+
+    public function getNetwork()
+    {
+        if ($this->network == null)
+        {
+            $this->network = getSingle($this->getWlanInterface()->registredNetworks(), 'getNetworkId()', $this->networkId);
+        }
+
+        return $this->network;
+    }
+
+    protected function canExecute()
+    {
+        if ($this->getWlanInterface() != null
+                && $this->getNetwork() != null)
+        {
+            return TRUE;
+        }
+        else
+        {
+            return FALSE;
+        }
+    }
+
+    protected function doIt()
+    {
+        $handler = WlanInterfaceHandler::Instance();
+        $handler->removeNetwork($this);
+    }
+
+}
+
+?>

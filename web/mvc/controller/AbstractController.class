@@ -1,0 +1,46 @@
+<?php
+
+abstract class AbstractController
+{
+
+    abstract static public function getPage();
+
+    abstract protected function index();
+
+    protected function sendResponse($viewName, AbstractModel $model = null)
+    {
+        if (sendResonseAsJson())
+        {
+            echo json_encode($model);
+        }
+        else
+        {
+            $this->includeView($viewName, $model);
+        }
+    }
+
+    private function includeView($viewName, AbstractModel $model = null)
+    {
+        $currentModel = $model;
+        include ResolveUrl('/mvc/view/'.$viewName.'.vphp');
+    }
+
+    public function load()
+    {
+        $reflec = new ReflectionClass(get_class($this));
+        $action = getHttp(Constants::$ACTION_HTTP_KEY);
+        $method = $action.'Action';
+
+        if (!empty($action)
+                && $reflec->hasMethod($method))
+        {
+            $this->$method();
+        }
+        else
+        {
+            $this->index();
+        }
+    }
+}
+
+?>

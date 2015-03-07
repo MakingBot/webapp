@@ -1,0 +1,65 @@
+<?php
+
+include_once ResolveUrl('/dal/sbin/AbstractSbin.class');
+
+class LocalDns extends AbstractSbin
+{
+    public static $CMD_CHANGE_HOSTNAME = 'CMD_CHANGE_HOSTNAME';
+    public static $CMD_GET_HOSTNAME = 'CMD_GET_HOSTNAME';
+    private $cmd;
+    private $newHostname;
+
+    public static function _new()
+    {
+        return new LocalDns();
+    }
+
+    public function setNewHostname($newHostname)
+    {
+        $this->newHostname = $newHostname;
+        $this->cmd = LocalDns::$CMD_CHANGE_HOSTNAME;
+        return $this;
+    }
+
+    public function getHostname()
+    {
+        $this->cmd = LocalDns::$CMD_GET_HOSTNAME;
+        return $this;
+    }
+
+    public function exec()
+    {
+        return trim($this->doIt());
+    }
+
+    protected function getCmd()
+    {
+        $command = Constants::$SUDOER_SCRIPT;
+
+        switch ($this->cmd)
+        {
+            case LocalDns::$CMD_CHANGE_HOSTNAME:
+                $command .= ' setHostname';
+                break;
+            case LocalDns::$CMD_GET_HOSTNAME:
+                $command .= ' getHostname';
+            default:
+                break;
+        }
+
+        return $command;
+    }
+
+    protected function getParam()
+    {
+        switch ($this->cmd)
+        {
+            case LocalDns::$CMD_CHANGE_HOSTNAME:
+                return $this->newHostname;
+            default:
+                return '';
+        }
+    }
+}
+
+?>

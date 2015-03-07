@@ -1,0 +1,19 @@
+<?php
+
+include_once ResolveUrl('/mvc/controller/AbstractController.class');
+
+class IndexController extends AbstractController
+{
+
+    public static function getPage()
+    {
+        return 'index';
+    }
+
+    protected function index()
+    {
+        $this->sendResponse('index');
+    }
+}
+
+?>

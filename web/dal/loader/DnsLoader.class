@@ -1,0 +1,40 @@
+<?php
+
+include_once ResolveUrl('/dal/loader/AbstractLoader.class');
+include_once ResolveUrl('/dal/sbin/LocalDns.class');
+
+class DnsLoader extends AbstractLoader
+{
+    private static $instance = null;
+
+    public static function Instance()
+    {
+        if (is_null(self::$instance))
+        {
+            self::$instance = new DnsLoader();
+        }
+        return self::$instance;
+    }
+
+    private function __construct()
+    {
+    }
+
+    public function getHostname()
+    {
+        return LocalDns::_new()
+            ->getHostname()
+            ->exec();
+    }
+
+    public function getLocalDnsName()
+    {
+        $hostname = LocalDns::_new()
+            ->getHostname()
+            ->exec();
+        
+        return $hostname.'.local';
+    }
+}
+
+?>

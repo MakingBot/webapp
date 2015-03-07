@@ -1,0 +1,19 @@
+<?php
+
+include_once ResolveUrl('/mvc/controller/AbstractController.class');
+
+class NotFoundController extends AbstractController
+{
+
+    public static function getPage()
+    {
+        return 'notFound';
+    }
+
+    protected function index()
+    {
+        $this->sendResponse('notFound');
+    }
+}
+
+?>

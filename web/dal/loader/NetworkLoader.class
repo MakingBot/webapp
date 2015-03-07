@@ -1,0 +1,107 @@
+<?php
+
+include_once ResolveUrl('/dal/loader/AbstractLoader.class');
+include_once ResolveUrl('/business/object/Network.class');
+
+class NetworkLoader extends AbstractLoader
+{
+    private static $instance = null;
+
+    public static function Instance()
+    {
+        if (is_null(self::$instance))
+        {
+            self::$instance = new NetworkLoader();
+        }
+        return self::$instance;
+    }
+
+    private function __construct()
+    {
+    }
+
+    public function getAll(WlanInterface $wlan)
+    {
+        $networks = array();
+
+        $arr = NmCli::_new()
+                ->setWlanName($wlan->name)
+                ->setCommand(NmCli::$CMD_GET_SCAN_RESULT)
+                ->exec();
+
+        foreach ($arr as $str)
+        {
+            $currentNetwork = new Network();
+            $currentNetwork->scan = new NetworkScan();
+            $currentNetwork->scan->ssid = trim($str[0], '\'');
+            $currentNetwork->scan->bssid = str_replace('\\:', ':', $str[1]);
+            $currentNetwork->scan->signalLevel = $str[5];
+            $currentNetwork->scan->setSecurity($str[6]);
+
+            if ($str[9] == 'yes')
+            {
+                $currentNetwork->isConnected = TRUE;
+                $wlan->currentNetwork = $currentNetwork;
+            }
+
+            //$currentNetwork->scan->setFlags($str[$columnArray[NetworkScan::$flagsKey]]);
+            //TODO !! add active, rate information !
+
+            $networks[] = $currentNetwork;
+        }
+
+        $arr = NmCli::_new()
+                ->setWlanName($wlan->name)
+                ->setCommand(NmCli::$CMD_REGISTRED_NETWORK)
+                ->exec();
+
+        foreach ($arr as $str)
+        {
+            if (strpos($str[2], 'wireless') === FALSE)
+            {
+                continue;
+            }
+               
+            $bssid = $this->getBssid($str[1]);
+
+            $currentNetwork = getSingle($networks, 'getBssid()', $bssid);
+
+            if ($currentNetwork == null
+                || $currentNetwork->config != null)
+            {
+                //new element if network not found
+                //or if config already settted (twice config for the same network)
+                $currentNetwork = new Network();
+                $networks[] = $currentNetwork;
+            }
+
+            $currentNetwork->config = new NetworkConfig();
+            $currentNetwork->config->ssid = $str[0];
+            $currentNetwork->config->networkId = $str[1];
+            $currentNetwork->config->bssid = $bssid;
+        }
+
+        return $networks;
+    }
+
+    private function getBssid($networkId)
+    {
+        $arr = NmCli::_new()
+            ->setNetworkId($networkId)
+            ->setCommand(NmCli::$CMD_REGISTRED_NETWORK_GET_BSSID)
+            ->exec();
+
+        foreach ($arr as $str)
+        {
+            if (strpos($str[0], 'bssid') === FALSE
+                || empty($str[1]) || $str[1] === '--')
+            {
+                continue;
+            }
+
+            return $str[1];
+        }
+    }
+}
+
+?>

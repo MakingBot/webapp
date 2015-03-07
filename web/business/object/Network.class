@@ -1,0 +1,64 @@
+<?php
+
+include_once ResolveUrl('/business/object/NetworkScan.class');
+include_once ResolveUrl('/business/object/NetworkConfig.class');
+
+class Network
+{
+
+    public $scan;
+    public $config;
+    public $isConnected = 0;
+
+    public function isAvaible()
+    {
+        return $this->scan != null;
+    }
+
+    public function isRegistred()
+    {
+        return $this->config != null;
+    }
+
+    public function getBssid()
+    {
+        return $this->isAvaible() ? $this->scan->bssid : $this->config->bssid;
+    }
+
+    public function getSsid()
+    {
+        return $this->isAvaible() ? $this->scan->ssid : $this->config->ssid;
+    }
+
+    public function getSignalLevel()
+    {
+        return $this->scan->signalLevel;
+    }
+
+    public function getSecurities()
+    {
+        return $this->scan->securities;
+    }
+
+    public function isConnected()
+    {
+        return $this->isConnected;
+    }
+
+    public function isMasked()
+    {
+        return $this->scan->isMasked();
+    }
+
+    public function isCrypted()
+    {
+        return $this->scan->isCrypted();
+    }
+
+    public function getNetworkId()
+    {
+        return $this->config->networkId;
+    }
+}
+
+?>

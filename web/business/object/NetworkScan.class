@@ -1,0 +1,51 @@
+<?php
+
+class NetworkScan
+{
+
+    static public $ssidKey = 'SSID';
+    static public $bssidKey = 'BSSID';
+    static public $signalLevelKey = 'SIGNAL';
+    static public $frequencyKey = 'FREQ';
+    public $ssid;
+    public $bssid;
+    public $signalLevel;
+    public $frequency;
+    public $securities = array();
+    
+    public function setSecurity($str)
+    {
+        $arr = explode(' ', $str);
+
+        for ($i = 0; $i < count($arr); $i++)
+        {
+            if ($arr[$i] === '')
+            {
+                continue;
+            }
+
+
+            if (strpos($arr[$i], 'WPA') !== FALSE && array_key_exists($i+1, $arr) && $arr[$i+1] === 'Enterprise')
+            {
+                $this->securities[] = $arr[$i].' '.$arr[$i+1];
+                $i++;
+            }
+            else
+            {
+                $this->securities[] = $arr[$i];                
+            }
+        }
+    }
+
+    public function isMasked()
+    {
+        return $this->ssid === '<hidden>';
+    }
+
+    public function isCrypted()
+    {
+        return count($this->securities) > 0;
+    }
+}
+
+?>

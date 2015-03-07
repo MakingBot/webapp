@@ -1,0 +1,40 @@
+<div id="connectForm" class="popup" title="Connect to wireless network">
+
+    <div>SSID : <?php echo htmlspecialchars($currentModel->network->getSsid()) ?></div>
+    <div>Address : <?php echo htmlspecialchars($currentModel->network->getBssid()) ?></div>
+
+    <?php if($currentModel->network->isCrypted()) { ?>
+    <div>Encryption : <?php echo implode(', ', $currentModel->network->getSecurities()) ?></div>
+    <div><label for="key">Password : </label><input type="text" name="key" id="connectFormPsk" value="" /></div>
+    <div><label for="showPassword">Show password </label><input type="checkbox" checked="checked" name="showPassword" id="showPassword" /></div>
+    <?php } ?>
+
+    <button onclick="javascript:connectToWireless()">Let's go !</button>
+    <div id="connectResponse"></div>
+</div>
+
+<script type="text/javascript">
+    
+    function connectToWireless(){
+        var $wlanKey = '<?php echo Constants::$WLAN_HTTP_KEY ?>';
+        var $wlanValue = '<?php echo htmlspecialchars($currentModel->wlanInterface->name) ?>';
+        
+        var $addressKey = '<?php echo Constants::$NETWORK_BSSID_HTTP_KEY ?>';
+        var $addressValue = '<?php echo htmlspecialchars($currentModel->network->getBssid()) ?>';        
+        
+        var $passwordKey = '<?php echo Constants::$NETWORK_KEY_HTTP_KEY ?>';
+        var $passwordValue = $('#connectFormPsk').val();
+         
+        var params = 'action=connectToNetwork&'+$wlanKey+'='+$wlanValue+'&'+$addressKey+'='+$addressValue+'&'+$passwordKey+'='+$passwordValue;
+        sendRequest('wireless', 'connectResponse', params, null, reloadPage);
+    }
+
+    $(document).ready(function() {
+        $('#showPassword').click(function(){
+            var isChecked = $('#showPassword').is(':checked');
+            var type = isChecked ? 'text' : 'password';
+            document.getElementById('connectFormPsk').type = type;
+        });
+    });
+    
+</script>

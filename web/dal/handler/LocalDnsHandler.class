@@ -1,0 +1,33 @@
+<?php
+
+include_once ResolveUrl('/dal/handler/AbstractHandler.class');
+include_once ResolveUrl('/dal/sbin/LocalDns.class');
+
+class LocalDnsHandler extends AbstractHandler
+{
+
+    private static $instance = null;
+
+    public static function Instance()
+    {
+        if (is_null(self::$instance))
+        {
+            self::$instance = new LocalDnsHandler();
+        }
+        return self::$instance;
+    }
+
+    private function __construct()
+    {
+        
+    }
+
+    public function changeHostname(ChangeHostName $cmd)
+    {
+        LocalDns::_new()
+            ->setNewHostname($cmd->newHostname)
+            ->exec();
+    }
+}
+
+?>

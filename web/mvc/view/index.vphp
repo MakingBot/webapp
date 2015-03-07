@@ -1,0 +1,7 @@
+<?php ?>
+<div>
+    <?php echo '<a href="?'.Constants::$PAGE_HTTP_KEY.'=wireless">Config wireless</a>'; ?>
+</div>
+<div>
+    <?php echo '<a href="?'.Constants::$PAGE_HTTP_KEY.'=install">Install</a>'; ?>
+</div>

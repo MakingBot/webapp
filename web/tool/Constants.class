@@ -1,0 +1,19 @@
+<?php
+
+class Constants
+{
+    public static $SUDOER_SCRIPT = 'sudo /usr/local/proteo/websudoer/websudoer.sh';
+
+    public static $WLAN_HTTP_KEY = 'wlanName';
+    public static $NETWORK_BSSID_HTTP_KEY = 'networkBssid';
+    public static $NETWORK_KEY_HTTP_KEY = 'networkKey';
+    public static $NETWORK_ID_HTTP_KEY = 'networkId';
+    public static $NETWORK_ENCRYPTION_HTTP_KEY = 'encryption';
+    
+    public static $ACTION_HTTP_KEY = 'action';
+    public static $PAGE_HTTP_KEY = 'page';
+    public static $JSON_HTTP_KEY = 'jsonData';
+    public static $JSON_RESPONSE_HTTP_KEY  = 'forceJsonResponse';
+}
+
+?>

@@ -1,0 +1,36 @@
+<?php
+
+include_once ResolveUrl('/dal/toolbox/Shell.class');
+
+abstract class AbstractSbin
+{
+    abstract protected function getCmd();
+
+    abstract protected function getParam();
+
+    abstract public function exec();
+
+    abstract public static function _new();
+
+    protected function doIt()
+    {
+        return Shell::Instance()->Exec($this->getCmd().' '.$this->getParam());
+    }
+
+    protected function removeEmptyLine($arr)
+    {
+        $returnArray = array();
+
+        foreach ($arr as $line)
+        {
+            if (!empty($line) || $line === "0")
+            {
+                $returnArray[] = $line;
+            }
+        }
+
+        return $returnArray;
+    }
+}
+
+?>

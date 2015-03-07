@@ -1,0 +1,10 @@
+<?php
+
+class CommandState
+{
+    
+    public static $SUCCESS = 'sucess';
+    public static $ERROR = 'error';
+}
+
+?>

@@ -1,0 +1,60 @@
+<?php
+
+include_once ResolveUrl('/dal/loader/AbstractLoader.class');
+include_once ResolveUrl('/dal/loader/NetworkLoader.class');
+include_once ResolveUrl('/dal/sbin/NmCli.class');
+include_once ResolveUrl('/business/object/WlanInterface.class');
+
+class WlanInterfaceLoader extends AbstractLoader
+{
+
+    private static $instance = null;
+
+    public static function Instance()
+    {
+        if (is_null(self::$instance))
+        {
+            self::$instance = new WlanInterfaceLoader();
+        }
+        return self::$instance;
+    }
+
+    private function __construct()
+    {
+        
+    }
+
+    public function getAll()
+    {
+        $arr = NmCli::_new()
+                ->setCommand(NmCli::$CMD_GET_ALL_INTERFACES)
+                ->exec();
+
+        $interfaces = array();
+
+        foreach ($arr as $str)
+        {
+            if (strpos($str[1], 'wireless') === FALSE)
+            {
+                continue;
+            }
+
+            $interfaces[] = new WlanInterface();
+            end($interfaces)->name = $str[0];
+        }
+
+        foreach ($interfaces as $wlan)
+        {
+            $this->getNetworks($wlan);
+        }
+
+        return $interfaces;
+    }
+
+    private function getNetworks(WlanInterface $wlan)
+    {
+        $wlan->networks = NetworkLoader::Instance()->getAll($wlan);
+    }
+}
+
+?>

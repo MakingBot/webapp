@@ -1,0 +1,34 @@
+<div id="localDns" class="localDns">
+    <span title="Based on 'Bonjour' service">Local DNS Name : </span>
+    <span id="localDnsName" class="localDnsName"><?php echo $currentModel->localDnsName; ?>
+        <span id="localDnsNameModify" class="imgBlock modify_2" toolTipTo="modify" onclick="javascript:localDnsNameModify();"></span>
+    </span>
+    <span id="localDnsNameInput" style="display: none;">
+        <input id="localDnsNameInputText" type="text" value="<?php echo $currentModel->hostname; ?>" />.local
+        <span id="localDnsNameSave" class="imgBlock save" onclick="javascript:localDnsNameSave();"></span>
+        <span id="localDnsNameCancel" class="imgBlock cancel" onclick="javascript:localDnsNameCancel();"></span>
+    </span>
+</div>
+
+<script type="text/javascript">
+
+    function localDnsNameModify()
+    {
+        $('#localDnsName').hide();
+        $('#localDnsNameInput').show();
+    }
+    
+    function localDnsNameCancel()
+    {
+        $('#localDnsName').show();
+        $('#localDnsNameInput').hide();
+    }
+    
+    function localDnsNameSave()
+    {        
+        var data = new Object();
+        data.newHostname = $('#localDnsNameInputText').val();
+
+        sendRequest('wireless', 'localDns', 'action=changeHostname', data);
+    }
+</script>

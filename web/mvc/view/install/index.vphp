@@ -1,0 +1,51 @@
+<?php ?>
+<div>
+    <h1>Installation instruction</h1>
+    <div>
+        <h2>Packages</h2>
+        <pre>
+            # Install apache2 and php5 lib
+            apt-get install apache2 php5 libapache2-mod-php5
+
+            # Install network-manager and avahi-daemon
+            apt-get install network-manager avahi-daemon libnss-mdns
+        </pre>
+    </div>
+    <div>
+        <h2>Sudo configuration</h2>
+        <pre>
+            # Add the following line in /etc/hosts
+            www-data ALL=(ALL) NOPASSWD: /usr/local/proteo/websudoer/websudoer.sh            
+        </pre>
+    </div>
+    <div>
+        <h2>Apache configuration</h2>
+        <pre>
+            # Modify /etc/apache2/sites-enabled/xxxxx
+            # Add the following lines in your favourite VirtualHost
+            &lt;Directory /proteoWeb/&gt;
+                Order deny,allow
+                Allow from all
+            &lt;/Directory&gt;
+        </pre>
+    </div>
+    <div>
+        <h2>Copy files</h2>
+        <pre>
+            # Copy websudoer.sh to /usr/local/proteo/websudoer/ directory
+            # Copy web site files /var/www/proteoWeb/ directory
+        </pre>
+    </div>
+    <div>
+        <h2>Ends</h2>
+        <pre>
+            # Reboot, avahi-daemon seems to need a reboot to work correctly
+        </pre>
+    </div>
+    <div>
+        <h2>Troubleshooting</h2>
+        <pre>
+            # Ahah, linux is not for unlucky guys
+        </pre>
+    </div>
+</div>

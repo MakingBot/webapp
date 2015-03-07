@@ -1,0 +1,23 @@
+<?php
+
+include_once ResolveUrl('/business/command/CommandState.class');
+
+abstract class AbstractCommand
+{
+
+    public $resultState;
+
+    public function Apply()
+    {
+        if ($this->canExecute())
+        {
+            $this->doIt();
+        }
+    }
+
+    abstract protected function canExecute();
+
+    abstract protected function doIt();
+}
+
+?>

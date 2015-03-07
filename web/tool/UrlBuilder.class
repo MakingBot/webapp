@@ -1,0 +1,55 @@
+<?php
+
+class UrlBuilder
+{
+
+    public $protocol;
+    public $serverName;
+    public $scripName;
+    public $params = array();
+    public $port;
+
+    public static function getCurrent()
+    {
+        $instance = new UrlBuilder();
+        $instance->protocol = (!empty($_SERVER['HTTPS'])) ? 'https' : 'http';
+        $instance->serverName = $_SERVER['SERVER_NAME'];
+        $instance->port = $_SERVER['SERVER_PORT'];
+        $instance->scripName = $_SERVER["SCRIPT_NAME"];
+
+        $instance->params = array();
+        foreach ($_GET as $key => $value)
+        {
+            $instance->params[$key] = htmlspecialchars($value);
+        }
+
+        return $instance;
+    }
+
+    public function toString()
+    {
+        $url = $this->protocol.'://';
+        if ($this->port != '80')
+        {
+            $url .= ':'.$this->port;
+        }
+
+        $url .= '/'.$this->serverName.$this->scripName;
+
+        $deletmiterParam = '?';
+        foreach ($this->params as $key => $value)
+        {
+            $url .= $deletmiterParam.$key.'='.$value;
+            $deletmiterParam = '&amp;';
+        }
+
+        return $url;
+    }
+
+    public function addParam($key, $value)
+    {
+        $this->params[$key] = $value;
+    }
+}
+
+?>

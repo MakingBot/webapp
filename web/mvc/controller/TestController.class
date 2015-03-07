@@ -1,0 +1,20 @@
+<?php
+
+include_once ResolveUrl('/mvc/controller/AbstractController.class');
+
+class TestController extends AbstractController
+{
+
+    public static function getPage()
+    {
+        return 'test';
+    }
+
+    protected function index()
+    {
+        //Test
+    }
+
+}
+
+?>

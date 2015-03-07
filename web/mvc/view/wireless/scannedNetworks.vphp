@@ -1,0 +1,100 @@
+<?php
+if ($currentModel->wlanInterface == null)
+{
+    return;
+}
+?>
+<div class="scannedNetworks" id="scannedNetworks">
+    <table class="dataTable defaultTable" id="scannedNetworksTable" >
+        <thead>
+            <tr>
+                <th>Network</th>
+                <th>BSSID</th>
+                <th class="defaultSortDesc">Quality</th>
+                <th class="unsortable"></th>
+                <th class="unsortable"></th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php
+            $i = 0;
+            foreach ($currentModel->wlanInterface->avaibleNetworks() as $network)
+            {
+                $lockClass = $network->isCrypted() ? 'lockClosed' : 'lockOpen';
+                $conClass = $network->isConnected() ? 'connected' : 'disconnected';
+                $params = Constants::$WLAN_HTTP_KEY . '=' . $currentModel->wlanInterface->name . '&amp;' . Constants::$NETWORK_BSSID_HTTP_KEY . '=' . $network->getBssid();
+                $trClass = $network->isRegistred () ? 'bold' : '';
+
+                if ($network->isConnected())
+                {
+                    $onclick = 'onclick="javascript:disconnect(\'' . $params . '\');"';
+                }
+                else if ($network->isRegistred())
+                {
+                    $onclick = 'onclick="javascript:directConnect(\'' . $params . '\');"';                    
+                }
+                else
+                {
+                    $onclick = 'onclick="javascript:openDialog(\'connectForm\', \'' . $params . '\');"';
+                }
+
+                echo '<tr class="'.$trClass.' '.$conClass.'">';
+                echo '<td class="text">' . htmlspecialchars($network->getSsid()) . '</td>';
+                echo '<td class="text">' . htmlspecialchars($network->getBssid()) . '</td>';
+                echo '<td class="number">' . htmlspecialchars($network->getSignalLevel()) . '</td>';
+                echo '<td><span class="toolTipFrom imgBlock ' . $lockClass . '" toolTipTo="lock' . $i . '" /></td>';
+                echo '<td><span class="toolTipFrom imgBlock ' . $conClass . '" toolTipTo="' . $conClass . '" ' . $onclick . ' /></td>';
+                echo '</tr>';
+                $i++;
+            }
+            ?>
+        </tbody>
+    </table>
+    <div>
+        <span class="link refreshLink" onclick="javascript:refreshWireless()">Refresh</span>
+    </div>
+</div>
+<div class="toolTipBlock">
+    <?php
+    $i = 0;
+    foreach ($currentModel->wlanInterface->avaibleNetworks() as $network)
+    {
+        echo '<div id="lock' . $i . '">';
+        if ($network->isCrypted())
+        {
+            $securites = implode(', ', $network->getSecurities());
+            echo '<div>Encryption : '.$securites.'</div>';
+        }
+        else
+        {
+            echo '<div>Not crypted</div>';
+        }
+
+        echo '</div>';
+        $i++;
+    }
+    ?>
+    <div id="connected">Connected network<br />Click to disconnect</div>
+    <div id="disconnected">Click to connect</div>
+</div>
+<div id="connectForm" class="popup" title="Connect to wireless network" page="wireless" action="getConnectForm" >
+</div>
+<script type="text/javascript">
+      
+    function refreshWireless()
+    {
+        var data = new Object();
+        data.<?php echo Constants::$WLAN_HTTP_KEY ?> = '<?php echo htmlspecialchars($currentModel->wlanInterface->name) ?>';
+
+        sendRequest('wireless', 'scannedNetworks', 'action=refreshScannedNetworks', data);
+    }
+
+    function directConnect(params){
+        sendRequest('wireless', 'scannedNetworks', 'action=directConnectToNetwork&'+params);
+    }
+
+    function disconnect(params){
+        sendRequest('wireless', 'scannedNetworks', 'action=disconnectNetwork&'+params);
+    }
+
+</script>

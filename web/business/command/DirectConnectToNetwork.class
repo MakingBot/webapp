@@ -1,0 +1,34 @@
+<?php
+
+include_once ResolveUrl('/business/command/AbstractCommand.class');
+include_once ResolveUrl('/dal/handler/WlanInterfaceHandler.class');
+
+class DisconnectNetwork extends AbstractCommand
+{
+
+    public $wlanInterface;
+    public $password;
+    public $network;
+
+    protected function canExecute()
+    {
+        if ($this->wlanInterface != null
+                && $this->network != null
+                && $this->network->isRegistred())
+        {
+            return TRUE;
+        }
+        else
+        {
+            return FALSE;
+        }
+    }
+
+    protected function doIt()
+    {
+        $handler = WlanInterfaceHandler::Instance();
+        $this->resultState = $handler->disconnectNetwork($this);
+    }
+}
+
+?>

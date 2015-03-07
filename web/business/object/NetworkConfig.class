@@ -1,0 +1,16 @@
+<?php
+
+class NetworkConfig
+{
+
+    static public $networkIdKey = 'network id';
+    static public $ssidKey = 'ssid';
+    static public $bssidKey = 'bssid';
+    static public $pskKey = 'psk';
+    public $networkId;
+    public $ssid;
+    public $bssid;
+    public $psk;
+}
+
+?>

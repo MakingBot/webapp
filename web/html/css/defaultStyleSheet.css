@@ -1,0 +1,373 @@
+body
+{
+    font-family: Arial, sans-serif;
+    font-size: 12px;
+}
+
+button
+{
+    cursor: pointer;
+}
+
+.defaultTable
+{
+    clear: both;
+    border-collapse:collapse;
+    margin: 10px;
+}
+
+.defaultTable thead tr
+{
+    background-color: #E6EEEE;
+    cursor: pointer;
+}
+
+.defaultTable th
+{
+    padding: 4px 4px;
+}
+
+.defaultTable th.sorting,
+.defaultTable th.sorting_asc,
+.defaultTable th.sorting_desc
+{
+    padding-right: 17px;
+    padding-left: 17px;
+    background-repeat: no-repeat;
+    background-position: right;
+}
+
+.defaultTable th.sorting
+{
+    background-image: url("../img/arrow_up_down.png");    
+}
+
+.defaultTable th.sorting_asc
+{
+    background-image: url("../img/arrow_up.png");    
+}
+
+.defaultTable th.sorting_desc
+{
+    background-image: url("../img/arrow_down.png");    
+}
+
+.defaultTable td,
+.defaultTable th
+{
+    border: 1px solid #CDCDCD;
+}
+
+.defaultTable tbody tr.odd
+{
+    background-color: #F0F0F6;
+}
+
+.defaultTable tbody tr.even
+{
+    background-color: #FFFFFF;
+}
+
+.defaultTable tbody tr.odd:hover,
+.defaultTable tbody tr.even:hover
+{
+    background-color: #EDFFFF;
+}
+
+.dataTables_filter,
+.dataTables_info
+{
+    float: left;
+}
+
+.dataTables_filter input
+{
+    width: 75px;
+}
+
+.dataTables_length,
+.dataTables_paginate
+{
+    float: right;
+}
+
+.dataTables_paginate div
+{
+    display: inline-block;
+    cursor: pointer;
+    width: 16px;
+    height: 16px;
+    background-size: 16px;
+}
+
+.dataTables_paginate div.paginate_enabled_previous
+{
+    background-image: url("../img/arrow_previous.png");
+}
+
+.dataTables_paginate div.paginate_disabled_previous
+{
+    background-image: url("../img/arrow_previous_disabled.png");
+}
+
+.dataTables_paginate div.paginate_enabled_next
+{
+    background-image: url("../img/arrow_next.png");
+}
+
+.dataTables_paginate div.paginate_disabled_next
+{
+    background-image: url("../img/arrow_next_disabled.png");
+}
+
+table .imgBlock,
+.sortableList .imgBlock,
+.localDns .imgBlock
+{
+    cursor: pointer;
+    display: inline-block;  
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+table .imgBlock
+{  
+    height: 24px;
+    width: 24px;
+}
+
+table .imgBlock.lockOpen
+{
+    background-image: url("../img/lock_open_green.png");
+    background-size: 24px;
+}
+
+table .imgBlock.lockClosed
+{
+    background-image: url("../img/lock_closed.png");
+    background-size: 24px;
+}
+
+table .imgBlock.disconnected
+{
+    background-image: url("../img/disconnect.png");
+    background-size: 14px;
+}
+
+table .imgBlock.connected,
+table .imgBlock.disconnected:hover
+{
+    background-image: url("../img/connect.png");
+    background-size: 14px;
+}
+
+table td.text
+{
+    padding: 5px 7px;
+}
+
+table tr.bold td.text
+{
+    font-weight: bold;
+}
+
+table tr.connected td.text
+{
+    color: green;
+}
+
+table td.number
+{
+    padding: 5px 7px;
+    text-align: right;
+}
+
+.left
+{
+    float: left;
+}
+
+.right
+{
+    float: right;
+}
+
+.clear
+{
+    clear: both;
+}
+
+.block
+{
+    margin: 10px;
+    min-height: 10px;
+}
+
+.link
+{
+    cursor: pointer;
+    text-decoration: underline;
+    color: blue;
+}
+
+#tooltip 
+{
+    position: absolute;
+    z-index: 3000;
+    border: 1px solid #111;
+    background-color: #FFFBD8;
+    padding: 5px;
+    opacity: 1;
+}
+
+#tooltip h3, 
+#tooltip div 
+{ 
+    margin: 0; 
+}
+
+.toolTipBlock
+{
+    display: none;
+}
+
+.sortableList
+{
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+.sortableList li 
+{
+    margin: 0 3px 3px;
+    padding: 5px 5px 5px 20px;
+    border: 1px solid #CDCDCD;
+    background-color: #F0F0F6;
+}
+
+.registredNetworks
+{
+    margin-top: 50px;
+    margin-left: 50px;
+    display: inline-block;
+    width: 300px;
+    vertical-align: top;
+}
+
+.scannedNetworks
+{
+    margin-top: 10px;
+    display: inline-block;
+    width: 400px;
+}
+
+.refreshLink
+{
+    margin-left: 30px;
+}
+
+.sortableList .imgBlock
+{  
+    height: 12px;
+    width: 12px;
+    padding-left: 10px;
+    background-size: 12px;
+}
+
+.sortableList .modify
+{
+    background-image: url("../img/modify.png");
+}
+
+.sortableList .delete
+{
+    background-image: url("../img/delete.gif");
+}
+
+.sortableList .info
+{
+    background-image: url("../img/info.png");
+    margin-left: 10px;
+}
+
+.sortableList .moveUpDown
+{
+    background-image: url("../img/move_updown.png");
+    background-size: auto;
+}
+
+.sortableList .actionButton
+{  
+    float: right;
+}
+
+.ui-widget-overlay
+{
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    left: 0;
+    top: 0;
+    background-color: #BFBFBF;
+    opacity: 0.5;
+}
+
+.ui-dialog
+{
+    clear: both;
+    background-color: white;
+    border: 1px solid black;
+}
+
+.ui-dialog-titlebar
+{
+    font-weight: bold;
+    height: 20px;
+    padding: 10px 10px 10px 20px;
+}
+
+.ui-dialog-titlebar-close
+{
+    float: right;
+}
+
+.ui-dialog-content
+{
+    margin: 10px;
+}
+
+.localDnsName
+{
+    font-weight: bold;
+}
+
+.localDns
+{
+    margin-top: 20px;
+}
+
+.localDns .imgBlock
+{
+    height: 14px;
+    width: 14px;
+    background-size: 14px;
+}
+
+.localDns .modify_2
+{
+    background-image: url("../img/modify_2.png");
+    margin-left: 10px;
+}
+
+.localDns .cancel
+{
+    background-image: url("../img/delete.gif");
+    margin-left: 5px;
+}
+
+.localDns .save
+{
+    background-image: url("../img/ok.png");
+    margin-left: 10px;
+}

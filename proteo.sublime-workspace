@@ -1,0 +1,614 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+			[
+				"pu",
+				"public"
+			],
+			[
+				"ex",
+				"explode"
+			],
+			[
+				"font",
+				"font-weight"
+			],
+			[
+				"con",
+				"continue"
+			],
+			[
+				"netw",
+				"networkId"
+			],
+			[
+				"for",
+				"foreach	foreach …"
+			],
+			[
+				"preg",
+				"preg_split"
+			],
+			[
+				"pr",
+				"preg_split"
+			],
+			[
+				"print",
+				"print_r"
+			],
+			[
+				"wlan",
+				"wlanName"
+			]
+		]
+	},
+	"buffers":
+	[
+		{
+			"file": "Readme.txt",
+			"settings":
+			{
+				"buffer_size": 1681,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "mvc/view/install/index.vphp",
+			"settings":
+			{
+				"buffer_size": 1439,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "/home/jay/Desktop/Install/websudoer/websudoer.sh",
+			"settings":
+			{
+				"buffer_size": 544,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "/home/jay/Desktop/Install/websudoer/autre",
+			"settings":
+			{
+				"buffer_size": 404,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "/home/jay/Desktop/Install/websudoer/install.sh",
+			"settings":
+			{
+				"buffer_size": 323,
+				"line_ending": "Unix",
+				"name": "sudo apt-get install apache2"
+			}
+		},
+		{
+			"file": "/home/jay/Desktop/Install/proteoInstall.sh",
+			"settings":
+			{
+				"buffer_size": 2309,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "tool/globalFunction.class",
+			"settings":
+			{
+				"buffer_size": 4218,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "mvc/controller/NotFoundController.class",
+			"settings":
+			{
+				"buffer_size": 299,
+				"line_ending": "Unix"
+			}
+		}
+	],
+	"build_system": "",
+	"command_palette":
+	{
+		"height": 0.0,
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"console":
+	{
+		"height": 0.0,
+		"history":
+		[
+		]
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"expanded_folders":
+	[
+		"/home/jay/Desktop/Web/business",
+		"/home/jay/Desktop/Web/business/command",
+		"/home/jay/Desktop/Web/business/object",
+		"/home/jay/Desktop/Web/dal",
+		"/home/jay/Desktop/Web/dal/handler",
+		"/home/jay/Desktop/Web/dal/loader",
+		"/home/jay/Desktop/Web/dal/sbin",
+		"/home/jay/Desktop/Web/html",
+		"/home/jay/Desktop/Web/mvc",
+		"/home/jay/Desktop/Web/mvc/controller",
+		"/home/jay/Desktop/Web/mvc/model",
+		"/home/jay/Desktop/Web/mvc/model/wireless",
+		"/home/jay/Desktop/Web/mvc/view",
+		"/home/jay/Desktop/Web/mvc/view/install",
+		"/home/jay/Desktop/Web/mvc/view/wireless"
+	],
+	"file_history":
+	[
+		"/home/jay/Desktop/websudoer.sh",
+		"/home/jay/Desktop/Web/mvc/controller/InstallController.class",
+		"/home/jay/Desktop/Web/mvc/view/index.vphp",
+		"/home/jay/Desktop/Install/websudoer/websudoer.sh",
+		"/home/jay/Desktop/Web/business/object/WlanInterface.class",
+		"/home/jay/Desktop/Web/mvc/controller/WirelessController.class",
+		"/home/jay/Desktop/Web/business/command/DirectConnectToNetwork.class",
+		"/home/jay/Desktop/Web/business/object/NetworkScan.class",
+		"/home/jay/Desktop/Web/business/object/NetworkConfig.class",
+		"/home/jay/Desktop/Web/dal/sbin/NmCli.class",
+		"/home/jay/Desktop/Web/html/script/onReady.js",
+		"/home/jay/Desktop/Web/mvc/view/wireless/wirelessForm.vphp",
+		"/home/jay/Desktop/Web/mvc/view/wireless/registredNetworks.vphp",
+		"/home/jay/Desktop/Web/dal/handler/WlanInterfaceHandler.class",
+		"/home/jay/Desktop/Web/mvc/view/wireless/scannedNetworks.vphp",
+		"/home/jay/Desktop/Web/dal/loader/WlanInterfaceLoader.class",
+		"/home/jay/Desktop/Web/dal/loader/NetworkLoader.class",
+		"/home/jay/Desktop/Web/tool/globalFunction.class",
+		"/home/jay/Desktop/Web/business/command/RefreshScannedNetworks.class",
+		"/home/jay/Desktop/Install/websudoer/log.info",
+		"/home/jay/Desktop/Web/dal/sbin/Dhclient.class",
+		"/home/jay/Desktop/Web/business/object/NetworkEncryption.class",
+		"/home/jay/Desktop/Web/business/object/Network.class",
+		"/home/jay/Desktop/Web/dal/sbin/AbstractSbin.class",
+		"/home/jay/Desktop/Web/html/css/defaultStyleSheet.css",
+		"/home/jay/Desktop/Web/business/command/RemoveNetwork.class",
+		"/home/jay/Desktop/Web/dal/sbin/WpaPassphrase.class",
+		"/home/jay/Desktop/Web/business/command/ConnectToNetwork.class",
+		"/home/jay/Desktop/Install/readme",
+		"/home/jay/Desktop/Web/mvc/model/wireless/WirelessConnectModel.class",
+		"/home/jay/Desktop/Web/tool/Constants.class",
+		"/home/jay/Desktop/Web/Readme.txt",
+		"/home/jay/Desktop/Web/dal/handler/LocalDnsHandler.class",
+		"/home/jay/Desktop/Web/dal/sbin/LocalDns.class",
+		"/home/jay/Desktop/Web/mvc/controller/TestController.class",
+		"/home/jay/Desktop/Web/mvc/view/wireless/wireless.vphp",
+		"/home/jay/Desktop/Install/httpUserTools/test.sh",
+		"/home/jay/Desktop/Install/httpUserTools/httpUserToolsCmd.sh",
+		"/home/jay/Desktop/Install/httpUserTools/httpUserToolsProcess.sh",
+		"/home/jay/Desktop/Install/httpUserTools/restTools.py",
+		"/home/jay/Desktop/Install/httpUserTools/settings.py"
+	],
+	"find":
+	{
+		"height": 35.0
+	},
+	"find_in_files":
+	{
+		"height": 93.0,
+		"where_history":
+		[
+			"",
+			"/home/jay/Desktop/Web/mvc/controller",
+			""
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": false,
+		"find_history":
+		[
+			"Test",
+			"WirelessController",
+			"getConnectModel",
+			"dhclient",
+			"//TODO",
+			"cmd_s",
+			"NetworkEn",
+			"group",
+			"priori",
+			"priority",
+			"reloadPage",
+			"show pass",
+			"$popup",
+			"$jquerySelector",
+			"$html",
+			"$jsonData",
+			"$params",
+			"$page",
+			"$response",
+			"startJavascript",
+			"sendRequest",
+			"<pre",
+			"removeEmptyLine",
+			"getTable",
+			"getSingleValue",
+			"avaibleNetworks",
+			"n error occured",
+			"an error occ",
+			"CMD_REMOVE_NETWORK",
+			"checkNetwork",
+			"removeNetwork",
+			"CMD_REGISTRED_NETWORK",
+			"{    ",
+			"getAll",
+			"wlanName",
+			"alert",
+			"isCrypted",
+			"encryptions",
+			"preg_split",
+			"prio",
+			"removeNetwork",
+			"sortableList",
+			"sort",
+			"sorta",
+			"sortableList",
+			"getDefaultPrevent",
+			"function refreshWireless()",
+			" Constants::$WLAN_HTTP_KE",
+			"colu",
+			"TestController",
+			"loadController",
+			"CMD_GET_SCAN_RESULT",
+			"preg_split"
+		],
+		"highlight": true,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": false,
+		"replace_history":
+		[
+			"popup",
+			"jquerySelector",
+			"html",
+			"jsonData",
+			"params",
+			"page",
+			"response"
+		],
+		"reverse": false,
+		"show_context": true,
+		"use_buffer2": true,
+		"whole_word": false,
+		"wrap": true
+	},
+	"groups":
+	[
+		{
+			"selected": 0,
+			"sheets":
+			[
+				{
+					"buffer": 0,
+					"file": "Readme.txt",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1681,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Text/Plain text.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "mvc/view/install/index.vphp",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1439,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1051,
+								1051
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/HTML/HTML.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 110.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "/home/jay/Desktop/Install/websudoer/websudoer.sh",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 544,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								262,
+								262
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/ShellScript/Shell-Unix-Generic.tmLanguage",
+							"tab_size": 3,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 42.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 2,
+					"type": "text"
+				},
+				{
+					"buffer": 3,
+					"file": "/home/jay/Desktop/Install/websudoer/autre",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 404,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								404,
+								404
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/ShellScript/Shell-Unix-Generic.tmLanguage",
+							"tab_size": 3,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 5,
+					"type": "text"
+				},
+				{
+					"buffer": 4,
+					"file": "/home/jay/Desktop/Install/websudoer/install.sh",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 323,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								172,
+								172
+							]
+						],
+						"settings":
+						{
+							"auto_name": "sudo apt-get install apache2",
+							"syntax": "Packages/ShellScript/Shell-Unix-Generic.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 3,
+					"type": "text"
+				},
+				{
+					"buffer": 5,
+					"file": "/home/jay/Desktop/Install/proteoInstall.sh",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 2309,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1821,
+								1821
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/ShellScript/Shell-Unix-Generic.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 687.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 4,
+					"type": "text"
+				},
+				{
+					"buffer": 6,
+					"file": "tool/globalFunction.class",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 4218,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								3505,
+								3505
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/HTML/HTML.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 2320.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 6,
+					"type": "text"
+				},
+				{
+					"buffer": 7,
+					"file": "mvc/controller/NotFoundController.class",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 299,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/HTML/HTML.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 7,
+					"type": "text"
+				}
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 25.0
+	},
+	"input":
+	{
+		"height": 33.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"output.find_results":
+	{
+		"height": 0.0
+	},
+	"project": "proteo.sublime-project",
+	"replace":
+	{
+		"height": 46.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 0.0,
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_symbol":
+	{
+		"height": 0.0,
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"selected_group": 0,
+	"settings":
+	{
+	},
+	"show_minimap": true,
+	"show_open_files": false,
+	"show_tabs": true,
+	"side_bar_visible": true,
+	"side_bar_width": 282.0,
+	"status_bar_visible": true,
+	"template_settings":
+	{
+	}
+}

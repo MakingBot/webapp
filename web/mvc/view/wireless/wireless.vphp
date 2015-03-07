@@ -1,0 +1,20 @@
+<div>
+    <h1>Wireless configuration</h1>
+</div>
+
+<?php
+if ($currentModel->wlanInterface === null)
+{
+    echo 'No wireless interface detected';
+}
+else
+{
+    ?>
+
+    <div>
+        Wireless interface : <b><?php echo $currentModel->wlanInterface->name; ?></b>
+    </div>
+
+    <?php
+}
+?>

@@ -1,0 +1,13 @@
+<?php
+
+include_once ResolveUrl('/mvc/model/AbstractModel.class');
+
+class WirelessConnectModel extends AbstractModel
+{
+
+    public $wlanInterface;
+    public $network;
+    public $key;
+}
+
+?>
