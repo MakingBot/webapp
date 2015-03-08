@@ -31,23 +31,29 @@ class NetworkLoader extends AbstractLoader
 
         foreach ($arr as $str)
         {
-            $currentNetwork = new Network();
-            $currentNetwork->scan = new NetworkScan();
-            $currentNetwork->scan->ssid = trim($str[0], '\'');
-            $currentNetwork->scan->bssid = str_replace('\\:', ':', $str[1]);
-            $currentNetwork->scan->signalLevel = $str[5];
-            $currentNetwork->scan->setSecurity($str[6]);
+            $ssid = trim($str[0], '\'');
+
+            $currentNetwork = getSingle($networks, 'getSsid()', $ssid);
+
+            if ($currentNetwork == null)
+            {
+                $currentNetwork = new Network();
+                $networks[] = $currentNetwork;
+            }
+
+            $scan = new NetworkScan();
+            $scan->ssid = trim($str[0], '\'');
+            $scan->bssid = str_replace('\\:', ':', $str[1]);
+            $scan->signalLevel = $str[5];
+            $scan->setSecurity($str[6]);
 
             if ($str[9] == 'yes')
             {
-                $currentNetwork->isConnected = TRUE;
+                $scan->isConnected = TRUE;
                 $wlan->currentNetwork = $currentNetwork;
             }
 
-            //$currentNetwork->scan->setFlags($str[$columnArray[NetworkScan::$flagsKey]]);
-            //TODO !! add active, rate information !
-
-            $networks[] = $currentNetwork;
+            $currentNetwork->scans[] = $scan;
         }
 
         $arr = NmCli::_new()
@@ -61,46 +67,24 @@ class NetworkLoader extends AbstractLoader
             {
                 continue;
             }
-               
-            $bssid = $this->getBssid($str[1]);
 
-            $currentNetwork = getSingle($networks, 'getBssid()', $bssid);
+            $ssid = $str[0];
+            $currentNetwork = getSingle($networks, 'getSsid()', $ssid);
 
-            if ($currentNetwork == null
-                || $currentNetwork->config != null)
+            if ($currentNetwork == null)
             {
-                //new element if network not found
-                //or if config already settted (twice config for the same network)
                 $currentNetwork = new Network();
                 $networks[] = $currentNetwork;
             }
 
-            $currentNetwork->config = new NetworkConfig();
-            $currentNetwork->config->ssid = $str[0];
-            $currentNetwork->config->networkId = $str[1];
-            $currentNetwork->config->bssid = $bssid;
+            $config = new NetworkConfig();
+            $config->ssid = $ssid;
+            $config->networkId = $str[1];
+
+            $currentNetwork->config = $config;
         }
 
         return $networks;
-    }
-
-    private function getBssid($networkId)
-    {
-        $arr = NmCli::_new()
-            ->setNetworkId($networkId)
-            ->setCommand(NmCli::$CMD_REGISTRED_NETWORK_GET_BSSID)
-            ->exec();
-
-        foreach ($arr as $str)
-        {
-            if (strpos($str[0], 'bssid') === FALSE
-                || empty($str[1]) || $str[1] === '--')
-            {
-                continue;
-            }
-
-            return $str[1];
-        }
     }
 }
 

@@ -6,13 +6,17 @@ include_once ResolveUrl('/business/object/NetworkConfig.class');
 class Network
 {
 
-    public $scan;
+    public $scans = array();
     public $config;
-    public $isConnected = 0;
 
     public function isAvaible()
     {
-        return $this->scan != null;
+        return count($this->scans) > 0;
+    }
+
+    public function isHotSpot()
+    {
+        return count($this->scans) > 1;
     }
 
     public function isRegistred()
@@ -22,42 +26,55 @@ class Network
 
     public function getBssid()
     {
-        return $this->isAvaible() ? $this->scan->bssid : $this->config->bssid;
+        return $this->isAvaible() ? $this->getBestScan()->bssid : '';
     }
 
     public function getSsid()
     {
-        return $this->isAvaible() ? $this->scan->ssid : $this->config->ssid;
+        return $this->isAvaible() ? $this->getBestScan()->ssid : $this->config->ssid;
     }
 
     public function getSignalLevel()
     {
-        return $this->scan->signalLevel;
+        return $this->getBestScan()->signalLevel;
     }
 
     public function getSecurities()
     {
-        return $this->scan->securities;
-    }
-
-    public function isConnected()
-    {
-        return $this->isConnected;
+        return $this->getBestScan()->securities;
     }
 
     public function isMasked()
     {
-        return $this->scan->isMasked();
+        return $this->getBestScan()->isMasked();
     }
 
     public function isCrypted()
     {
-        return $this->scan->isCrypted();
+        return $this->getBestScan()->isCrypted();
+    }
+
+    public function isConnected()
+    {
+        return $this->getBestScan()->isConnected;
     }
 
     public function getNetworkId()
     {
         return $this->config->networkId;
+    }
+
+    private function getBestScan()
+    {
+        $connectedScan = getSingle($this->scans, 'isConnected', TRUE);
+
+        if($connectedScan != null)
+        {
+            return $connectedScan;
+        }
+
+        $orderedScans = orderByDesc($this->scans, 'signalLevel');
+        return $orderedScans[0];
     }
 }
 

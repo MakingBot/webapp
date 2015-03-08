@@ -1,18 +1,15 @@
 //TODO
 
 - split globalFunction.class en petit bout
-- ajout de la commande pour le sudoer
 - network loader, supprimer les netArrAttr[i] pour y mettre des champs humainement compréhensible (BSSID/SSID ...)
 - nmcli, sortir les champs à récupérer
 - connection aux réseaux sans mot de passe
 - log avec log4net
-- page d'install
 - login passwd pour accéder à la page wireless ?
 - passage au wpapassphrase pour un peu plus de secu ?
 - sortir les JS
 - supprimer les .class et .vphp, et interdire la visu sur les fichiers php autre que la page d'index.
 - voir du coté du cron pour le refresh du wifi
-- gestion du bousin dans un sous répertoire apache
 - suppression du lien network/bssid, fusionner les réseaux avec le meme ssid
 
 

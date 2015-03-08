@@ -11,6 +11,7 @@ class NetworkScan
     public $bssid;
     public $signalLevel;
     public $frequency;
+    public $isConnected = FALSE;
     public $securities = array();
     
     public function setSecurity($str)
@@ -25,7 +26,9 @@ class NetworkScan
             }
 
 
-            if (strpos($arr[$i], 'WPA') !== FALSE && array_key_exists($i+1, $arr) && $arr[$i+1] === 'Enterprise')
+            if (strpos($arr[$i], 'WPA') !== FALSE 
+                && array_key_exists($i+1, $arr) 
+                && $arr[$i+1] === 'Enterprise')
             {
                 $this->securities[] = $arr[$i].' '.$arr[$i+1];
                 $i++;

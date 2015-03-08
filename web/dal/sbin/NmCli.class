@@ -11,7 +11,6 @@ class NmCli extends AbstractSbin
     public static $CMD_DISCONNECT_NETWORK = 'CMD_DISCONNECT_NETWORK';
     public static $CMD_REMOVE_NETWORK = 'CMD_REMOVE_NETWORK';
     public static $CMD_REGISTRED_NETWORK = 'CMD_REGISTRED_NETWORK';
-    public static $CMD_REGISTRED_NETWORK_GET_BSSID = 'CMD_REGISTRED_NETWORK_GET_BSSID';
     public static $CMD_GET_ALL_INTERFACES = 'CMD_GET_ALL_INTERFACES';
     public static $CMD_GET_SCAN_RESULT = 'CMD_GET_SCAN_RESULT';
     private $wlanName;
@@ -65,12 +64,6 @@ class NmCli extends AbstractSbin
     public function exec()
     {
         $arr = $this->removeEmptyLine(preg_split("'[\n\r]'", $this->doIt()));
-
-        if ($this->cmd ===NmCli::$CMD_REGISTRED_NETWORK_GET_BSSID)
-        {
-            return $this->getFuckingBssid($arr);
-        }
-
         return $this->getTable($arr);
     }
 
@@ -99,33 +92,12 @@ class NmCli extends AbstractSbin
         return $table;
     }
 
-    private function getFuckingBssid($arr)
-    {
-        //sur cette commande, le bssid n'est pas "escaped" ...
-        $table = array();
-
-        foreach ($arr as $str)
-        {
-            $lineArray = array();
-            $lineData = explode(":", $str, 2);
-
-            foreach ($lineData as $data)
-            {
-                $lineArray[] = $data;
-            }
-
-            $table[] = $lineArray;
-        }
-
-        return $table;
-    }
-
     protected function getParam()
     {
         switch ($this->cmd)
         {
             case NmCli::$CMD_CONNECT_NETWORK:
-                $params = 'device wifi connect "'.$this->ssid.'" bssid '.$this->bssid.' iface '.$this->wlanName.' password "'.$this->password.'" --timeout 30';
+                $params = 'device wifi connect "'.$this->ssid.'" iface '.$this->wlanName.' password "'.$this->password.'" --timeout 30';
                 break;
             case NmCli::$CMD_DIRECT_CONNECT_NETWORK:
                  $params = 'connection up uuid "'.$this->networkId.'" --timeout 30';
@@ -138,9 +110,6 @@ class NmCli extends AbstractSbin
                 break;
             case NmCli::$CMD_REGISTRED_NETWORK:
                 $params = '-t -f name,uuid,type connection';
-                break;
-            case NmCli::$CMD_REGISTRED_NETWORK_GET_BSSID:
-                $params = '-t -f 802-11-wireless connection list uuid '.$this->networkId;
                 break;
             case NmCli::$CMD_GET_ALL_INTERFACES:
                 $params = '-t -f device,type device';

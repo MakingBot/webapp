@@ -28,7 +28,6 @@ class WlanInterfaceHandler extends AbstractHandler
                 ->setWlanName($cmd->wlanInterface->name)
                 ->setCommand(NmCli::$CMD_CONNECT_NETWORK)
                 ->setSsid($cmd->network->getSsid())
-                ->setBssid($cmd->network->getBssid())
                 ->setPassword($cmd->password)
                 ->exec();
 

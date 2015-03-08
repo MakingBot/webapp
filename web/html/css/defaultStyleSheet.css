@@ -161,17 +161,27 @@ table .imgBlock.disconnected:hover
     background-size: 14px;
 }
 
+table .imgBlock.hotspot
+{
+    background-image: url("../img/hotspot.png");
+    background-size: 20px;
+    vertical-align: bottom;
+    height: 14px;
+    width: 20px;
+    margin-left: 3px;
+}
+
 table td.text
 {
     padding: 5px 7px;
 }
 
-table tr.bold td.text
+table tr.bold td
 {
     font-weight: bold;
 }
 
-table tr.connected td.text
+table tr.connected td
 {
     color: green;
 }

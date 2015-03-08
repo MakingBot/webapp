@@ -89,9 +89,7 @@ class WirelessController extends AbstractController
         $cmd->network = $model->network;
         $cmd->Apply();
 
-        $model = new WirelessModel();
-        $model->wlanInterface = $cmd->getWlanInterface();
-
+        $model = $this->getModel();
         $this->sendResponse('wireless/scannedNetworks', $this->getModel());
     }
 

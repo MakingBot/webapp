@@ -21,7 +21,7 @@ if ($currentModel->wlanInterface == null)
         foreach ($networks as $network)
         {
             echo '<li id="remove-network-'.$network->getNetworkId().'">';
-            echo $network->config->ssid;
+            echo $network->getSsid();
             echo '<span class="toolTipFrom imgBlock info" toolTipTo="info"></span>';
             echo '<span class="toolTipFrom actionButton imgBlock delete" toolTipTo="remove" onclick="javascript:removeNetwork(\'' . $network->getNetworkId() . '\')" ></span>';
             echo '</li>';

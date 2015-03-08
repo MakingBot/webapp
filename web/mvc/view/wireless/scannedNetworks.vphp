@@ -38,8 +38,10 @@ if ($currentModel->wlanInterface == null)
                     $onclick = 'onclick="javascript:openDialog(\'connectForm\', \'' . $params . '\');"';
                 }
 
+                $hotSpot = $network->isHotSpot() ? '<span class=" toolTipFrom imgBlock hotspot" toolTipTo="hotspot" />': '';
+
                 echo '<tr class="'.$trClass.' '.$conClass.'">';
-                echo '<td class="text">' . htmlspecialchars($network->getSsid()) . '</td>';
+                echo '<td class="text">' . htmlspecialchars($network->getSsid()) . ' '.$hotSpot.'</td>';
                 echo '<td class="text">' . htmlspecialchars($network->getBssid()) . '</td>';
                 echo '<td class="number">' . htmlspecialchars($network->getSignalLevel()) . '</td>';
                 echo '<td><span class="toolTipFrom imgBlock ' . $lockClass . '" toolTipTo="lock' . $i . '" /></td>';
@@ -76,6 +78,10 @@ if ($currentModel->wlanInterface == null)
     ?>
     <div id="connected">Connected network<br />Click to disconnect</div>
     <div id="disconnected">Click to connect</div>
+    <div id="hotspot">
+        Several wifi with same SSID.<br/>
+        Connected wifi or best signal is displayed.
+    </div>
 </div>
 <div id="connectForm" class="popup" title="Connect to wireless network" page="wireless" action="getConnectForm" >
 </div>
