@@ -2,7 +2,7 @@
 
 class Constants
 {
-    public static $SUDOER_SCRIPT = 'sudo /usr/local/proteo/websudoer/websudoer.sh';
+    public static $SUDOER_SCRIPT = 'sudo /usr/local/robot/websudoer/websudoer.sh';
 
     public static $WLAN_HTTP_KEY = 'wlanName';
     public static $NETWORK_BSSID_HTTP_KEY = 'networkBssid';

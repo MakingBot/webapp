@@ -9,7 +9,9 @@ include_once ResolveUrl('/mvc/controller/TestController.class');
 
 function ResolveUrl($str)
 {
-    return $_SERVER['DOCUMENT_ROOT'].$str;
+    $scriptFileName = $_SERVER['SCRIPT_FILENAME'];
+    $virtualHostDirectory = substr($scriptFileName, 0, strrpos($scriptFileName, '/'));
+    return $virtualHostDirectory.$str;
 }
 
 function getSingle($array, $key, $value)

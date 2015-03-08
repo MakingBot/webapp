@@ -356,3 +356,10 @@ nmcli -t -f 802-11-wireless connection list uuid 9e294543-1e1b-493b-8155-e55b642
 nmcli -t -f 802-11-wireless connection list uuid 36355701-7a81-4d42-a781-2e6045d0a14b
 getHostname
 getHostname
+nmcli -t -f device,type device
+nmcli -t -f ssid,bssid,mode,freq,rate,signal,security,wpa-flags,rsn-flags,active device wifi list iface wlan0
+nmcli -t -f name,uuid,type connection
+nmcli -t -f 802-11-wireless connection list uuid 9e294543-1e1b-493b-8155-e55b6420f4e6
+nmcli -t -f 802-11-wireless connection list uuid 36355701-7a81-4d42-a781-2e6045d0a14b
+getHostname
+getHostname

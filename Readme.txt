@@ -13,6 +13,7 @@
 - supprimer les .class et .vphp, et interdire la visu sur les fichiers php autre que la page d'index.
 - voir du coté du cron pour le refresh du wifi
 - gestion du bousin dans un sous répertoire apache
+- suppression du lien network/bssid, fusionner les réseaux avec le meme ssid
 
 
 
@@ -29,14 +30,14 @@ Packages
 Sudo configuration
 
             # Add the following line in /etc/sudoers
-            www-data ALL=(ALL) NOPASSWD: /usr/local/proteo/websudoer/websudoer.sh            
+            www-data ALL=(ALL) NOPASSWD: /usr/local/robot/websudoer/websudoer.sh
         
 
 Apache configuration
 
             # Modify /etc/apache2/sites-enabled/xxxxx
             # Add the following lines in your favourite VirtualHost
-            <Directory />
+            <Directory /web/>
                 Order deny,allow
                 Allow from all
             </Directory>
@@ -44,13 +45,14 @@ Apache configuration
 
 Copy files
 
-            # Copy websudoer.sh to /usr/local/proteo/websudoer/ directory
-            # Copy web site files /var/www/ directory
+            # Copy websudoer.sh to /usr/local/robot/websudoer/ directory
+            # Copy web site files /var/www/web/ directory
         
 
 Ends
 
             # Reboot, avahi-daemon seems to need a reboot to work correctly
+            # Go to http://127.0.0.1/web/
         
 
 Troubleshooting
