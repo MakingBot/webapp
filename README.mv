@@ -3,14 +3,11 @@
 - split globalFunction.class en petit bout
 - network loader, supprimer les netArrAttr[i] pour y mettre des champs humainement compréhensible (BSSID/SSID ...)
 - nmcli, sortir les champs à récupérer
-- connection aux réseaux sans mot de passe
 - log avec log4net
 - login passwd pour accéder à la page wireless ?
-- passage au wpapassphrase pour un peu plus de secu ?
 - sortir les JS
 - supprimer les .class et .vphp, et interdire la visu sur les fichiers php autre que la page d'index.
 - voir du coté du cron pour le refresh du wifi
-- suppression du lien network/bssid, fusionner les réseaux avec le meme ssid
 
 
 
