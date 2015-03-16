@@ -26,8 +26,6 @@ then
 fi
 
 # Add scripts
-mkdir /usr/local/robot
-mkdir /usr/local/robot/websudoer
 rm /usr/local/robot/websudoer/websudoer.sh
 mkdir /var/www/web
 
