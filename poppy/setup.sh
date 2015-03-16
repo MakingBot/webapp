@@ -14,9 +14,11 @@ apt-get -y install apache2 php5 libapache2-mod-php5 network-manager \
 avahi-daemon libnss-mdns subversion
 
 # Sudo configuration for the websudoer app
+echo -e "\e[33mSudo file configuration for root access\e[0m"
 echo "www-data ALL=(ALL) NOPASSWD: /usr/local/robot/websudoer/websudoer.sh" >> /etc/sudoers
 
 # Apache configuration
+echo -e "\e[33mApache server configuration\e[0m"
 if ! grep -q added /etc/apache2/sites-enabled/000-default.conf
 then
     sed -i.bkp '/VirtualHost>/i #added lines\n\t<Directory \/web\/>\n\t\tOrder deny,allow\n\t\tAllow from all\n\t</Directory>' /etc/apache2/sites-enabled/000-default.conf
@@ -30,6 +32,7 @@ rm /usr/local/robot/websudoer/websudoer.sh
 mkdir /var/www/web
 
 # Download sources
+echo -e "\e[33mDownload sources\e[0m"
 wget -P  /usr/local/robot/websudoer https://raw.githubusercontent.com/MakingBot/webapp/master/websudoer/websudoer.sh
 chmod +x /usr/local/robot/websudoer/websudoer.sh
 svn checkout https://github.com/MakingBot/webapp/trunk/web /var/www/web
