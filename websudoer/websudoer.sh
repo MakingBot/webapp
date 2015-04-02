@@ -6,7 +6,8 @@ function setHostname()
 {
    oldhostname=$(hostname)
    echo $1 > /etc/hostname
-   sed -i "s/127.0.1.1\t$oldhostname/127.0.1.1\t$1/g" /etc/hosts
+   echo $(cat /etc/hosts | sed '/$oldhostname/d') > /etc/hosts
+   echo "127.0.1.1 $1" >> /etc/hosts
    /usr/sbin/service avahi-daemon restart
 }
 
